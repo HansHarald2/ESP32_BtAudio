@@ -78,6 +78,25 @@ void MessageHandler::loop() {
             Serial.println("RELAY ON");
             if (btSerial) btSerial->println("ACK: RELAY ON");
         }
+        else if (cmd.startsWith("SPARKPLAY ")) {
+            Serial.println("SparkPlay");
+
+            // Relais anziehen
+            digitalWrite(relayPin, HIGH);
+            if (btSerial) btSerial->println("ACK: SparkPlay");
+
+            // Song abspielen
+            if (audio) {
+                bool ok = audio->playSong(cmd.substring(10)); // "SPARKPLAY " = 10 Zeichen
+                if (btSerial) btSerial->println(ok ? "ACK: Playing song" : "ERR: Song not found");
+            }
+
+            // 2 Sekunden warten (Relais aktiv halten)
+            delay(4000);
+
+            // Relais wieder ausschalten
+            digitalWrite(relayPin, LOW);
+        }
         else if (cmd.startsWith("PLAY ")) {
             Serial.println("Play");
             if (audio) {
