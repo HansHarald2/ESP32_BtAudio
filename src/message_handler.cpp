@@ -1,13 +1,17 @@
 // message_handler.cpp
 #include "message_handler.h"
 
-void MessageHandler::begin(Sound* audioInstance, int ledPin, BluetoothSerial* bt) {
+void MessageHandler::begin(Sound* audioInstance, int ledPin,int relayPin, BluetoothSerial* bt) {
     this->audio = audioInstance;
     this->ledPin = ledPin;
+    this->relayPin = relayPin;
     this->btSerial = bt;
 
     pinMode(ledPin, OUTPUT);
     digitalWrite(ledPin, LOW);
+
+    pinMode(relayPin, OUTPUT);
+    digitalWrite(relayPin, LOW);
 
     Serial.println("MessageHandler ready");
     if (btSerial) Serial.println("BluetoothSerial linked");
@@ -64,6 +68,16 @@ void MessageHandler::loop() {
             Serial.println("LED OFF");
             if (btSerial) btSerial->println("ACK: LED OFF");
         } 
+        else if (cmd.equalsIgnoreCase("RELAYOFF")) {
+            digitalWrite(relayPin , LOW);
+            Serial.println("RELAY OFF");
+            if (btSerial) btSerial->println("ACK: RELAY OFF");
+        }
+        else if (cmd.equalsIgnoreCase("RELAYON")) {
+            digitalWrite(relayPin , HIGH);
+            Serial.println("RELAY ON");
+            if (btSerial) btSerial->println("ACK: RELAY ON");
+        }
         else if (cmd.startsWith("PLAY ")) {
             Serial.println("Play");
             if (audio) {

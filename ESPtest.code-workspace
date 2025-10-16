@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "ESPtest",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"initializer_list": "cpp"
+		}
+	}
+}

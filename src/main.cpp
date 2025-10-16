@@ -7,6 +7,7 @@
 
 
 #define LED_PIN 25
+#define RELAY_PIN 27 // GPIO für Relais
 #define OLED_SDA 21
 #define OLED_SCL 19
 
@@ -43,7 +44,7 @@ void setup() {
 
     }
     audio.begin();
-    msgHandler.begin(&audio, LED_PIN, &SerialBT);
+    msgHandler.begin(&audio, LED_PIN, RELAY_PIN,  &SerialBT);
     xTaskCreatePinnedToCore(btTask, "bt", 4096, NULL, 5, NULL, 1);
 }
 

@@ -9,12 +9,13 @@
 
 class MessageHandler {
 public:
-    void begin(Sound* audioInstance, int ledPin, BluetoothSerial* bt = nullptr);
+    void begin(Sound* audioInstance, int ledPin, int relayPin, BluetoothSerial* bt = nullptr);
     void loop();
 
 private:
     Sound* audio = nullptr;
     int ledPin = -1;
+    int relayPin = -1;
     BluetoothSerial* btSerial = nullptr;
     Adafruit_SSD1306 display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1); // OLED-Objekt
 };
