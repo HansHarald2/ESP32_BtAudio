@@ -11,11 +11,18 @@ class MessageHandler {
 public:
     void begin(Sound* audioInstance, int ledPin, int relayPin, BluetoothSerial* bt = nullptr);
     void loop();
+    void sdReady();
 
 private:
+    void ReadFile(const char * path);
+    void ListPlayDirectory(const char * path);
+    void showTextOnOLED(String content);
+    void showDebugStatus();
+    
     Sound* audio = nullptr;
     int ledPin = -1;
     int relayPin = -1;
     BluetoothSerial* btSerial = nullptr;
-    Adafruit_SSD1306 display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1); // OLED-Objekt
+    Adafruit_SSD1306 display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+    bool sdCardReady = false;
 };
